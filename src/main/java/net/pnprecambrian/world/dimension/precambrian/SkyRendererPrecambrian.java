@@ -1,6 +1,8 @@
 package net.pnprecambrian.world.dimension.precambrian;
 
 import net.lepidodendron.LepidodendronConfig;
+import net.lepidodendron.LepidodendronEventSubscribers;
+import net.lepidodendron.LepidodendronEventSubscribers.Meteor;
 import net.lepidodendron.util.EnumBiomeTypePrecambrian;
 import net.lepidodendron.world.biome.precambrian.BiomePrecambrian;
 import net.minecraft.client.Minecraft;
@@ -441,6 +443,81 @@ public class SkyRendererPrecambrian extends IRenderHandler {
         GlStateManager.enableAlpha();
         GlStateManager.enableFog();
         GlStateManager.popMatrix();
+        
+        //add meteors
+		for(Meteor meteor : LepidodendronEventSubscribers.meteors) {
+			GL11.glPushMatrix();
+			GL11.glDisable(GL11.GL_FOG);
+			GL11.glEnable(GL11.GL_TEXTURE_2D);
+			double dx = mc.player.prevPosX + (mc.player.posX - mc.player.prevPosX) * partialTicks;
+			double dy = mc.player.prevPosY + (mc.player.posY - mc.player.prevPosY) * partialTicks;
+			double dz = mc.player.prevPosZ + (mc.player.posZ - mc.player.prevPosZ) * partialTicks;
+			Vec3d vec = new Vec3d(meteor.posX - dx, meteor.posY, meteor.posZ - dz);
+			Vec3d vec2 = new Vec3d(meteor.posX - dx, meteor.posY, meteor.posZ - dz);
+			double l = Math.min(Minecraft.getMinecraft().gameSettings.renderDistanceChunks*16, vec.length());
+			double sf = Math.max(0.2,(312.5/(vec2.length()/l)));
+			vec = vec.normalize();
+			Vec3d vecd = new Vec3d(vec.x*l, vec.y*l, vec.z*l);
+			GL11.glTranslated( vecd.x, vecd.y , vecd.z);
+			double descent = 2017d-meteor.posY;
+			double quadratic = (-1*Math.pow(descent, 2)+(1517*descent))/41; 
+			float scalar = (float) (quadratic/vec2.length())*1.5f; 
+			GL11.glScaled(scalar*1.5, scalar*1.5, scalar*1.5);
+			LepidodendronEventSubscribers.renderMeteorGlow(1,partialTicks);
+			GL11.glDisable(GL11.GL_TEXTURE_2D);
+			GL11.glEnable(GL11.GL_FOG);
+			GL11.glPopMatrix();
+	}
+	for(Meteor fragment : LepidodendronEventSubscribers.fragments) {
+		GL11.glPushMatrix();
+		GL11.glDisable(GL11.GL_FOG);
+		GL11.glEnable(GL11.GL_TEXTURE_2D);
+		double dx = mc.player.prevPosX + (mc.player.posX - mc.player.prevPosX) * partialTicks;
+		double dy = mc.player.prevPosY + (mc.player.posY - mc.player.prevPosY) * partialTicks;
+		double dz = mc.player.prevPosZ + (mc.player.posZ - mc.player.prevPosZ) * partialTicks;
+		Vec3d vec = new Vec3d(fragment.posX - dx, fragment.posY, fragment.posZ - dz);
+		Vec3d vec2 = new Vec3d(fragment.posX - dx, fragment.posY, fragment.posZ - dz);
+		double l = Math.min(Minecraft.getMinecraft().gameSettings.renderDistanceChunks*16, vec.length());
+		double sf = Math.max(0.2,(312.5/(vec2.length()/l)));
+		vec = vec.normalize();
+		Vec3d vecd = new Vec3d(vec.x*l, vec.y*l, vec.z*l);
+		GL11.glTranslated( vecd.x, vecd.y , vecd.z);
+		double descent = 2017d-fragment.posY;
+		double quadratic = (-1*Math.pow(descent, 2)+(1517*descent))/82;
+		float scalar = (float) (quadratic/vec2.length()); 
+			GL11.glScaled(scalar, scalar, scalar);
+			LepidodendronEventSubscribers.renderMeteorGlow(1,partialTicks);
+		GL11.glDisable(GL11.GL_TEXTURE_2D);
+		GL11.glEnable(GL11.GL_FOG);
+		GL11.glPopMatrix();
+}
+	for(Meteor smoke : LepidodendronEventSubscribers.smoke) {
+		GL11.glPushMatrix();
+		GL11.glDisable(GL11.GL_FOG);
+		GL11.glEnable(GL11.GL_TEXTURE_2D);
+		double dx = mc.player.prevPosX + (mc.player.posX - mc.player.prevPosX) * partialTicks;
+		double dy = mc.player.prevPosY + (mc.player.posY - mc.player.prevPosY) * partialTicks;
+		double dz = mc.player.prevPosZ + (mc.player.posZ - mc.player.prevPosZ) * partialTicks;
+		Vec3d vec = new Vec3d(smoke.posX - dx, smoke.posY, smoke.posZ - dz);
+		Vec3d vec2 = new Vec3d(smoke.posX - dx, smoke.posY, smoke.posZ - dz);
+		double l = Math.min(Minecraft.getMinecraft().gameSettings.renderDistanceChunks*16, vec.length());
+		double sf = Math.max(0.2,(312.5/(vec2.length()/l)));
+		vec = vec.normalize();
+		Vec3d vecd = new Vec3d(vec.x*l, vec.y*l, vec.z*l);
+		GL11.glTranslated( vecd.x, vecd.y , vecd.z);
+		double descent = 2017d-smoke.posY;
+		double quadratic = (-1*Math.pow(descent, 2)+(1517*descent))/82;
+		//float scalar = (float) (14000f/vec2.lengthVector()); 
+		float scalar = (float) (quadratic/vec2.length())*1.5f; 
+			//scalar = 3500;
+		GL11.glColor4d(1, 0, 0, 1);
+			GL11.glScaled(scalar, scalar, scalar);
+			LepidodendronEventSubscribers.renderMeteorSmoke(smoke.age);
+		GL11.glDisable(GL11.GL_TEXTURE_2D);
+		GL11.glEnable(GL11.GL_FOG);
+		GL11.glPopMatrix();
+}
+        
         GlStateManager.disableTexture2D();
         GlStateManager.color(0.0F, 0.0F, 0.0F);
         double d3 = mc.player.getPositionEyes(partialTicks).y - theWorld.getHorizon();
