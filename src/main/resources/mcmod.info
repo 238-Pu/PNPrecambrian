@@ -3,16 +3,16 @@
     "modid": "pnprecambrian",
     "name": "Prehistoric Nature Precambrian",
     "description": "Adds the Prehistoric Nature Precambrian dimension",
-    "version": "4.01",
+    "version": "4.03",
     "mcversion": "1.12.2",
     "url": "",
     "updateUrl": "",
     "authorList": ["Aecht_Rob"],
     "credits": "Prehistoric Nature",
-    "dependencies": ["lepidodendron@[59.0,)","jeid@[2.0.6,)"],
+    "dependencies": ["lepidodendron@[60.0,)","jeid@[2.0.6,)"],
     "logoFile": "",
     "screenshots": [],
-    "requiredMods": ["lepidodendron@[59.0,)","jeid@[2.0.6,)"],
+    "requiredMods": ["lepidodendron@[60.0,)","jeid@[2.0.6,)"],
     "useDependencyInformation": "true"
   }
 ]

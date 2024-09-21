@@ -8,6 +8,7 @@ import net.lepidodendron.block.BlockStromatoliteSticky;
 import net.lepidodendron.util.Functions;
 import net.lepidodendron.util.ModTriggers;
 import net.lepidodendron.util.ParticlePNPortal;
+import net.lepidodendron.world.biome.precambrian.BiomePrecambrian;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.BlockPortal;
@@ -48,6 +49,7 @@ import net.pnprecambrian.ElementsPNPrecambrianMod;
 import net.pnprecambrian.world.biome.precambrian.BiomePaleoproterozoicBeach;
 import net.pnprecambrian.world.biome.precambrian.BiomePaleoproterozoicRegolith;
 import net.pnprecambrian.world.biome.precambrian.BiomePaleoproterozoicShallows;
+import net.pnprecambrian.world.biome.precambrian.BiomeProterozoicHills;
 
 import javax.annotation.Nullable;
 import java.io.BufferedReader;
@@ -98,6 +100,15 @@ public class WorldPrecambrian extends ElementsPNPrecambrianMod.ModElement {
 			this.biomeProvider = new BiomeProviderPrecambrian(this.world.getSeed(), this.world.getWorldInfo());
 			this.nether = NETHER_TYPE;
 			this.hasSkyLight = true;
+		}
+
+		@Override
+		public Biome getBiomeForCoords(BlockPos pos) {
+			Biome b = super.getBiomeForCoords(pos);
+			if (b instanceof BiomePrecambrian) {
+				return b;
+			}
+			return BiomeProterozoicHills.biome;
 		}
 
 		@SideOnly(Side.CLIENT)

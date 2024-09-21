@@ -2,13 +2,14 @@
 package net.pnprecambrian.world.biome.precambrian;
 
 import net.lepidodendron.ElementsLepidodendronMod;
+import net.lepidodendron.block.BlockDiskagma;
 import net.lepidodendron.block.BlockSandPaleoproterozoic;
 import net.lepidodendron.util.EnumBiomeTypePrecambrian;
 import net.lepidodendron.world.biome.precambrian.BiomePrecambrian;
 import net.lepidodendron.world.gen.WorldGenCobble;
-import net.lepidodendron.world.gen.WorldGenDiskagma;
 import net.lepidodendron.world.gen.WorldGenNullTree;
 import net.lepidodendron.world.gen.WorldGenScoria;
+import net.lepidodendron.world.gen.WorldGenSinglePlantOptionalWater;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
@@ -66,7 +67,8 @@ public class BiomePaleoproterozoicRegolith extends ElementsLepidodendronMod.ModE
 
 		protected static final WorldGenScoria SCORIA_GENERATOR = new WorldGenScoria();
 		protected static final WorldGenCobble COBBLE_GENERATOR = new WorldGenCobble();
-		protected static final WorldGenDiskagma DISKAGMA_GENERATOR = new WorldGenDiskagma();
+		//protected static final WorldGenDiskagma DISKAGMA_GENERATOR = new WorldGenDiskagma();
+		protected static final WorldGenSinglePlantOptionalWater DISKAGMA_GENERATOR = new WorldGenSinglePlantOptionalWater();
 
 		public WorldGenAbstractTree getRandomTreeFeature(Random rand)
 		{
@@ -104,11 +106,11 @@ public class BiomePaleoproterozoicRegolith extends ElementsLepidodendronMod.ModE
 			}
 
 			if (net.minecraftforge.event.terraingen.TerrainGen.decorate(worldIn, rand, new net.minecraft.util.math.ChunkPos(pos), net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType.ROCK)) {
-				for (int i = 0; i < 2; ++i) {
+				for (int i = 0; i < 3; ++i) {
 					int j = rand.nextInt(16) + 8;
 					int k = rand.nextInt(16) + 8;
 					int l = rand.nextInt(worldIn.getHeight(pos.add(j, 0, k)).getY() + 32);
-					DISKAGMA_GENERATOR.generate(worldIn, rand, pos.add(j, l, k));
+					DISKAGMA_GENERATOR.generate(BlockDiskagma.block.getDefaultState(), worldIn, rand, pos.add(j, l, k), 0, 255, true);
 				}
 			}
 

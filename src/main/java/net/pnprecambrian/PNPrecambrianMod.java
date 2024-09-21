@@ -24,11 +24,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.function.Supplier;
 
-@Mod(modid = net.pnprecambrian.PNPrecambrianMod.MODID, name = net.pnprecambrian.PNPrecambrianMod.NAME, version = net.pnprecambrian.PNPrecambrianMod.VERSION, dependencies = "required-after:lepidodendron@[59.0,)")
+@Mod(modid = net.pnprecambrian.PNPrecambrianMod.MODID, name = net.pnprecambrian.PNPrecambrianMod.NAME, version = net.pnprecambrian.PNPrecambrianMod.VERSION, dependencies = "required-after:lepidodendron@[60.0,)")
 public class PNPrecambrianMod {
     public static final String MODID = "pnprecambrian";
     public static final String NAME = "Prehistoric Nature Precambrian Dimension";
-    public static final String VERSION = "4.01";
+    public static final String VERSION = "4.03";
     public static final SimpleNetworkWrapper PACKET_HANDLER = NetworkRegistry.INSTANCE.newSimpleChannel("pnprecambrian:a");
     @SidedProxy(clientSide = "net.pnprecambrian.ClientProxyPNPrecambrianMod", serverSide = "net.pnprecambrian.ServerProxyPNPrecambrianMod")
     public static net.pnprecambrian.IProxyPNPrecambrianMod proxy;

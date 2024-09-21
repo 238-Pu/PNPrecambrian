@@ -1,6 +1,7 @@
 package net.pnprecambrian.world.dimension.precambrian;
 
 import com.google.common.collect.Lists;
+import net.lepidodendron.world.biome.precambrian.BiomePrecambrian;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.util.ReportedException;
@@ -22,32 +23,33 @@ import java.util.Random;
 
 public class BiomeProviderPrecambrian extends BiomeProvider {
     public static List<Biome> allowedBiomes = Lists.newArrayList(
-            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:archean_beach")),
-            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:archean_caustic")),
-            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:archean_shallow_sea")),
-            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:archean_tide_pools")),
-            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:archean_trench")),
-            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:cryogenian_beach")),
-            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:cryogenian_desert")),
-            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:cryogenian_ocean")),
-            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:ediacaran_beach")),
-            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:ediacaran_extreme_hills")),
-            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:ediacaran_frondose_forest")),
-            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:ediacaran_trench")),
-            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:hadean_craters")),
-            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:hadean_lava")),
-            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:hadean_smelts")),
-            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:hadean_smelts_helper")),
-            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:precambrian_biome")),
             Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:mesoproterozoic_beach")),
-            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:mesoproterozoic_carpet")),
-            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:neoproterozoic_plains")),
-            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:paleoproterozoic_beach")),
             Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:paleoproterozoic_regolith")),
+            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:archean_tide_pools")),
+            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:paleoproterozoic_beach")),
+            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:cryogenian_desert")),
+            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:mesoproterozoic_carpet")),
+            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:archean_shallow_sea")),
+            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:archean_caustic")),
+            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:cryogenian_ocean")),
             Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:paleoproterozoic_shallows")),
+            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:archean_beach")),
+            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:cryogenian_beach")),
+            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:ediacaran_beach")),
+            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:proterozoic_hills")),
             Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:precambrian_sea")),
-            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:proterozoic_hills"))
-    );
+            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:precambrian_biome")),
+            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:hadean_craters")),
+            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:ediacaran_extreme_hills")),
+            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:ediacaran_trench")),
+            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:neoproterozoic_plains")),
+            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:archean_trench")),
+            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:hadean_lava")),
+            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:ediacaran_frondose_forest")),
+            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:hadean_smelts_helper")),
+            Biome.REGISTRY.getObject(new ResourceLocation("lepidodendron:hadean_smelts"))
+
+            );
     public GenLayer genBiomes;
     /** A GenLayer containing the indices into BiomeGenBase.biomeList[] */
     public GenLayer biomeIndexLayer;
@@ -160,6 +162,9 @@ public class BiomeProviderPrecambrian extends BiomeProvider {
                 Biome biome = Biome.getBiome(aint[k1]);
 
                 if (!allowed.contains(biome)) {
+                    return false;
+                }
+                if (!(biome instanceof BiomePrecambrian)) {
                     return false;
                 }
             }
